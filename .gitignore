@@ -3,3 +3,6 @@ node_modules
 .next
 next-env.d.ts
 Voice Notes Microphone Icon.png
+desktop/out
+desktop/bin
+desktop/obj
