@@ -293,7 +293,6 @@ export function TranscriptionApp() {
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-20 top-0 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl" />
         <div className="absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-cyan-400/20 blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.16),rgba(0,0,0,0)_45%)]" />
       </div>
 
       <div className="relative mx-auto grid w-full max-w-6xl gap-5 lg:grid-cols-[2.1fr_1fr]">
