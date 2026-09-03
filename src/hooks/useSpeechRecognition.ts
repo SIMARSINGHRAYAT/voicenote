@@ -66,7 +66,7 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
   const [status, setStatus] = useState<RecorderStatus>("ready");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
-  const [isSupported, setIsSupported] = useState(false);
+  const [isSupported, setIsSupported] = useState(true);
   const [audioLevel, setAudioLevel] = useState(0);
   const [durationMs, setDurationMs] = useState(0);
 
