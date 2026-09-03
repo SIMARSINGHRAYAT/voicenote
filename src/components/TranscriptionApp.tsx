@@ -86,6 +86,7 @@ export function TranscriptionApp() {
   const [savedCopyId, setSavedCopyId] = useState<string | null>(null);
   const [savedMessages, setSavedMessages] = useState<SavedMessage[]>([]);
   const [messageName, setMessageName] = useState("");
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const caretRef = useRef({ start: 0, end: 0 });
@@ -274,6 +275,21 @@ export function TranscriptionApp() {
     updateCaret(0, 0);
   };
 
+  const startSpeaking = async () => {
+    if (countdown !== null) {
+      return;
+    }
+
+    armRecordingInsertionPoint();
+    for (let seconds = 5; seconds > 0; seconds -= 1) {
+      setCountdown(seconds);
+      await new Promise((resolve) => window.setTimeout(resolve, 1000));
+    }
+
+    setCountdown(null);
+    await start();
+  };
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-black px-4 py-6 sm:px-6 lg:px-8">
       <div className="pointer-events-none absolute inset-0">
@@ -374,14 +390,11 @@ export function TranscriptionApp() {
               onClick={canResume ? () => {
                 armRecordingInsertionPoint();
                 resume();
-              } : async () => {
-                armRecordingInsertionPoint();
-                await start();
-              }}
-              disabled={!canStart && !canResume}
+              } : startSpeaking}
+              disabled={(!canStart && !canResume) || countdown !== null}
               className="col-span-2 rounded-lg bg-cyan-300 px-4 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-cyan-200 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {canResume ? "Resume" : "Start Speaking"}
+              {canResume ? "Resume" : countdown !== null ? `Get ready... ${countdown}` : "Start Speaking"}
             </button>
             <button
               type="button"

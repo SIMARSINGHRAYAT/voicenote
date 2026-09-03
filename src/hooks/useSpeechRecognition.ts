@@ -253,6 +253,10 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
       setStatus(mapped.status);
       setErrorMessage(mapped.message);
 
+      if (event.error === "no-speech" && shouldKeepRunningRef.current) {
+        setInterimText("");
+      }
+
       if (event.error === "network" && shouldKeepRunningRef.current) {
         reconnectAttemptsRef.current += 1;
       }
