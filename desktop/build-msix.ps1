@@ -36,9 +36,10 @@ $msix = Join-Path $out "VoiceNote.msix"
 if ($LASTEXITCODE -ne 0) { throw "MakeAppx failed with exit code $LASTEXITCODE" }
 
 $cert = Join-Path $out "VoiceNote.cer"
-$existing = Get-ChildItem Cert:\CurrentUser\My | Where-Object Subject -eq "CN=SIMARSINGHRAYAT" | Select-Object -First 1
+$publisher = "CN=3B174D80-27C2-465C-82C4-8E24A3F5D93D"
+$existing = Get-ChildItem Cert:\CurrentUser\My | Where-Object Subject -eq $publisher | Select-Object -First 1
 if (-not $existing) {
-    $existing = New-SelfSignedCertificate -Type CodeSigningCert -Subject "CN=SIMARSINGHRAYAT" -CertStoreLocation Cert:\CurrentUser\My -HashAlgorithm SHA256
+    $existing = New-SelfSignedCertificate -Type CodeSigningCert -Subject $publisher -CertStoreLocation Cert:\CurrentUser\My -HashAlgorithm SHA256
 }
 Export-Certificate -Cert $existing -FilePath $cert | Out-Null
 & $signtool sign /fd SHA256 /sha1 $existing.Thumbprint $msix

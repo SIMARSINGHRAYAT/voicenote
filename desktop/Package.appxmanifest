@@ -4,7 +4,7 @@
          xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
          IgnorableNamespaces="uap uap10 rescap">
-  <Identity Name="SIMARSINGHRAYAT.VoiceNote" Publisher="CN=SIMARSINGHRAYAT" Version="1.0.0.0" />
+  <Identity Name="KILZSNIPPET.VOICENOTEMEMO" Publisher="CN=3B174D80-27C2-465C-82C4-8E24A3F5D93D" Version="1.0.0.0" />
   <Properties>
     <DisplayName>VOICE NOTE MEMO</DisplayName>
     <PublisherDisplayName>KILZSNIPPET</PublisherDisplayName>
