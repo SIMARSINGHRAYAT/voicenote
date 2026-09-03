@@ -20,7 +20,7 @@ internal sealed class VoiceNoteForm : Form
 
     public VoiceNoteForm()
     {
-        Text = "Voice Note";
+        Text = "# VOICE NOTE MEMO";
         Width = 1440;
         Height = 960;
         MinimumSize = new Size(960, 640);
@@ -44,7 +44,7 @@ internal sealed class VoiceNoteForm : Form
         {
             MessageBox.Show(
                 $"Voice Note could not start. Install Microsoft Edge WebView2 Runtime and try again.\n\n{error.Message}",
-                "Voice Note",
+                "# VOICE NOTE MEMO",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }

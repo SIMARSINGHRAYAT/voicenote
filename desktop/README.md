@@ -1,4 +1,4 @@
-# Voice Note MSIX
+# # VOICE NOTE MEMO MSIX
 
 This wrapper opens the deployed Voice Note app at `https://voicenote-mocha.vercel.app` in Microsoft Edge WebView2 and allows microphone permission only for that origin.
 
