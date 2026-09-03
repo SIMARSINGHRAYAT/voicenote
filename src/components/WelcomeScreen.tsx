@@ -10,10 +10,10 @@ export function WelcomeScreen() {
 
       <section className="relative flex w-full max-w-5xl flex-col items-center text-center">
         <div className="mb-6 flex justify-center">
-          <img src="/voice-notes-microphone-icon.png" alt="# VOICE NOTE MEMO microphone logo" className="h-24 w-24 object-contain sm:h-32 sm:w-32" />
+          <img src="/voice-notes-microphone-icon.png" alt="VOICE NOTE MEMO microphone logo" className="h-24 w-24 object-contain sm:h-32 sm:w-32" />
         </div>
         <h1 className="bg-[linear-gradient(180deg,#f4f6f8_0%,#c5ccd3_30%,#8e98a3_52%,#e7ebef_74%,#b9c0c8_100%)] bg-clip-text text-6xl font-semibold tracking-tight text-transparent sm:text-8xl">
-          # VOICE NOTE MEMO
+          VOICE NOTE MEMO
         </h1>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-lg font-medium sm:text-2xl">

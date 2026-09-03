@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "# VOICE NOTE MEMO",
+  title: "VOICE NOTE MEMO",
   description:
-    "# VOICE NOTE MEMO is a professional real-time speech-to-text web app with live captions, editing, and export.",
+    "VOICE NOTE MEMO is a professional real-time speech-to-text web app with live captions, editing, and export.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
