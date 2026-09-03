@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { DEFAULT_LANGUAGE } from "@/lib/languages";
 import { appendCommittedTranscript, applySpokenPunctuation } from "@/lib/transcript";
 import type { RecorderStatus, SpeechHookState } from "@/types/transcription";
@@ -66,6 +66,7 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
   const [status, setStatus] = useState<RecorderStatus>("ready");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
+  const [isSupported, setIsSupported] = useState(false);
   const [audioLevel, setAudioLevel] = useState(0);
   const [durationMs, setDurationMs] = useState(0);
 
@@ -80,8 +81,11 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
   const intentionalStopRef = useRef(false);
   const reconnectAttemptsRef = useRef(0);
 
-  const isSupported = useMemo(() => getSpeechRecognitionConstructor() !== null, []);
   const isSecureContextAvailable = typeof window === "undefined" ? true : window.isSecureContext;
+
+  useEffect(() => {
+    setIsSupported(getSpeechRecognitionConstructor() !== null);
+  }, []);
 
   const stopDurationTicker = useCallback(() => {
     if (durationIntervalRef.current) {

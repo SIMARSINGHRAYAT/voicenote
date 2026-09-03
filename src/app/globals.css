@@ -2,6 +2,7 @@
 
 :root {
   color-scheme: light;
+  --app-font: "Comic Sans MS", "Comic Sans", cursive;
 }
 
 * {
@@ -12,6 +13,7 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  font-family: var(--app-font);
 }
 
 ::selection {

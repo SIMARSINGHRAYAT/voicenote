@@ -90,6 +90,7 @@ export function TranscriptionApp() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const caretRef = useRef({ start: 0, end: 0 });
   const lastCommittedRef = useRef("");
+  const autoStartedRef = useRef(false);
 
   const updateCaret = useCallback((start: number, end: number) => {
     caretRef.current = { start, end };
@@ -98,6 +99,19 @@ export function TranscriptionApp() {
   useEffect(() => {
     setLanguage("en-US");
   }, [setLanguage]);
+
+  useEffect(() => {
+    if (autoStartedRef.current || typeof window === "undefined") {
+      return;
+    }
+
+    if (new URLSearchParams(window.location.search).get("autostart") !== "1") {
+      return;
+    }
+
+    autoStartedRef.current = true;
+    void start();
+  }, [start]);
 
   useEffect(() => {
     try {
