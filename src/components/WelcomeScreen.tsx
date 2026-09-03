@@ -27,7 +27,7 @@ export function WelcomeScreen() {
 
         <div className="mt-12">
           <Link
-            href="/dashboard"
+            href="/dashboard?autostart=1"
             className="inline-flex items-center justify-center rounded-xl border border-slate-300/40 bg-[linear-gradient(180deg,#eef2f5_0%,#9ca5af_40%,#dfe4e8_70%,#8d98a3_100%)] px-8 py-3 text-sm font-semibold text-slate-950 shadow-[0_10px_35px_rgba(255,255,255,0.18)] transition hover:brightness-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
           >
             Get Started
