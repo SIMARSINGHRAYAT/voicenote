@@ -227,14 +227,19 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       let interim = "";
 
-      for (let i = 0; i < event.results.length; i += 1) {
+      for (let i = event.resultIndex; i < event.results.length; i += 1) {
         const result = event.results[i];
         const transcript = result[0]?.transcript ?? "";
 
         if (result.isFinal) {
           setCommittedText((previous) => appendCommittedTranscript(previous, transcript));
-        } else {
-          interim = `${interim} ${transcript}`.trim();
+        }
+      }
+
+      for (let i = 0; i < event.results.length; i += 1) {
+        const result = event.results[i];
+        if (!result.isFinal) {
+          interim = `${interim} ${result[0]?.transcript ?? ""}`.trim();
         }
       }
 
