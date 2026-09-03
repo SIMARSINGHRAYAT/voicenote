@@ -8,7 +8,7 @@ export function WelcomeScreen() {
         <div className="absolute -right-20 bottom-2 h-80 w-80 rounded-full bg-cyan-400/20 blur-3xl" />
       </div>
 
-      <section className="relative w-full max-w-5xl text-center">
+      <section className="relative flex w-full max-w-5xl flex-col items-center text-center">
         <div className="mb-6 flex justify-center">
           <img src="/voice-notes-microphone-icon.png" alt="Voice Note microphone logo" className="h-24 w-24 object-contain sm:h-32 sm:w-32" />
         </div>
@@ -24,9 +24,9 @@ export function WelcomeScreen() {
           <span className="bg-[linear-gradient(180deg,#f4f6f8_0%,#c5ccd3_30%,#8e98a3_52%,#e7ebef_74%,#b9c0c8_100%)] bg-clip-text text-transparent">Privacy-First</span>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-12 flex justify-center">
           <Link
-            href="/dashboard?autostart=1"
+            href="/dashboard"
             className="inline-flex items-center justify-center rounded-xl border border-slate-300/40 bg-[linear-gradient(180deg,#eef2f5_0%,#9ca5af_40%,#dfe4e8_70%,#8d98a3_100%)] px-8 py-3 text-sm font-semibold text-slate-950 shadow-[0_10px_35px_rgba(255,255,255,0.18)] transition hover:brightness-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
           >
             Get Started
