@@ -227,7 +227,7 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       let interim = "";
 
-      for (let i = event.resultIndex; i < event.results.length; i += 1) {
+      for (let i = 0; i < event.results.length; i += 1) {
         const result = event.results[i];
         const transcript = result[0]?.transcript ?? "";
 
@@ -238,7 +238,7 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
         }
       }
 
-      setInterimText(applySpokenPunctuation(interim));
+      setInterimText(applySpokenPunctuation(interim.trim()));
       setErrorMessage(null);
       reconnectAttemptsRef.current = 0;
     };

@@ -42,16 +42,12 @@ export function TranscriptEditor({
         className="min-h-[320px] w-full resize-y rounded-xl border border-white/20 bg-black/40 p-4 text-base leading-relaxed text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-300/30"
         aria-describedby="interim-caption"
       />
-      <p id="interim-caption" className="mt-3 min-h-6 text-sm text-slate-300" aria-live="polite">
-        {interimText ? (
-          <>
-            <span className="font-medium text-cyan-200">Interim:</span>{" "}
-            <span className="italic text-slate-100">{interimText}</span>
-          </>
-        ) : (
-          "Live interim speech appears here while recording."
-        )}
-      </p>
+      <div id="interim-caption" className="mt-3 min-h-20 rounded-xl border border-cyan-300/20 bg-cyan-300/[0.06] p-3" aria-live="polite">
+        <p className="text-xs font-semibold uppercase tracking-wide text-cyan-200">Live response</p>
+        <p className="mt-2 text-base leading-relaxed text-slate-100">
+          {interimText || <span className="text-slate-400">Start speaking to see your words appear instantly.</span>}
+        </p>
+      </div>
     </section>
   );
 }
