@@ -19,6 +19,7 @@
   </Dependencies>
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <DeviceCapability Name="microphone" />
   </Capabilities>
   <Applications>
     <Application Id="VoiceNote" Executable="VoiceNote.exe" uap10:TrustLevel="mediumIL" uap10:RuntimeBehavior="win32App">

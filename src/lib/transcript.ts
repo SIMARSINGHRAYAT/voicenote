@@ -2,6 +2,7 @@ const SPOKEN_PUNCTUATION: Array<[RegExp, string]> = [
   [/\bquestion mark\b/gi, "?"],
   [/\bexclamation mark\b/gi, "!"],
   [/\bfull stop\b/gi, "."],
+  [/\bdot\b/gi, "."],
   [/\bperiod\b/gi, "."],
   [/\bcomma\b/gi, ","],
   [/\bsemicolon\b/gi, ";"],
@@ -13,20 +14,57 @@ const SPOKEN_PUNCTUATION: Array<[RegExp, string]> = [
   [/\bdouble cute\b/gi, '"'],
   [/\bopen quote\b/gi, '"'],
   [/\bclose quote\b/gi, '"'],
-  [/\bnew line\b/gi, "\n"],
-  [/\bnew paragraph\b/gi, "\n\n"],
+  [/\bnext paragraph\b|\bnew paragraph\b/gi, "\n\n"],
+  [/\bnext line\b|\bnew line\b|\bline break\b|\bnewline\b/gi, "\n"],
+  [/\bopen parenthesis\b|\bleft parenthesis\b|\bopening parenthesis\b|\bround bracket open\b|\bleft round bracket\b/gi, "("],
+  [/\bclose parenthesis\b|\bright parenthesis\b|\bclosing parenthesis\b|\bround bracket close\b|\bright round bracket\b/gi, ")"],
+  [/\bopen bracket\b|\bleft bracket\b|\bopening bracket\b|\bsquare bracket open\b|\bleft square bracket\b/gi, "["],
+  [/\bclose bracket\b|\bright bracket\b|\bclosing bracket\b|\bsquare bracket close\b|\bright square bracket\b/gi, "]"],
+  [/\bopen brace\b|\bopen curly brace\b|\bleft brace\b|\bopening brace\b|\bcurly bracket open\b|\bleft curly bracket\b/gi, "{"],
+  [/\bclose brace\b|\bclose curly brace\b|\bright brace\b|\bclosing brace\b|\bcurly bracket close\b|\bright curly bracket\b/gi, "}"],
+  [/\bangle bracket\s+a\s+slash\s+b\s+angle bracket\b/gi, "<a/b>"],
+  [/\bopen angle bracket\b|\bangle bracket open\b|\bleft angle bracket\b|\bless than\b/gi, "<"],
+  [/\bclose angle bracket\b|\bangle bracket close\b|\bright angle bracket\b|\bgreater than\b/gi, ">"],
+  [/\bslash\b|\bforward slash\b/gi, "/"],
+  [/\bbackslash\b|\bbackward slash\b/gi, "\\"],
+  [/\bplus sign\b|\bplus\b/gi, "+"],
+  [/\bminus sign\b|\bdash\b|\bhyphen\b/gi, "-"],
+  [/\bequal sign\b|\bequals\b/gi, "="],
+  [/\basterisk\b|\bstar\b/gi, "*"],
+  [/\bpercent sign\b|\bpercent\b/gi, "%"],
+  [/\bhash\b|\bnumber sign\b/gi, "#"],
+  [/\bat sign\b/gi, "@"],
+  [/\bunderscore\b/gi, "_"],
+  [/\bampersand\b|\band sign\b/gi, "&"],
+  [/\bdollar sign\b|\bdollar\b/gi, "$"],
+  [/\bpipe\b|\bvertical bar\b/gi, "|"],
+  [/\bcaret\b/gi, "^"],
+  [/\btilde\b/gi, "~"],
+  [/\bbacktick\b/gi, "`"],
+  [/\bexclamation point\b/gi, "!"],
+  [/\bquestion point\b/gi, "?"],
+  [/\bquote\b/gi, '"'],
+  [/\bopen quote\b/gi, '"'],
+  [/\bclose quote\b/gi, '"'],
+  [/\bcomma\b/gi, ","],
 ];
 
 function cleanupPunctuationSpacing(text: string): string {
   return text
     .replace(/\s+([,.;:!?])/g, "$1")
-    .replace(/([,.;:!?])(\S)/g, "$1 $2")
+    .replace(/([,.;:!?])([^\s])/g, "$1 $2")
+    .replace(/\.(\s+)(com|org|net|io|co|uk|us|ca|in|edu|gov|me|info|app|dev|ai)/gi, ".$2")
+    .replace(/([A-Za-z0-9\]])\s*([+-])\s*([A-Za-z0-9\[])/g, "$1 $2 $3")
+    .replace(/\s+([@#$%*/\\<>\[\]{}()|_~`])/g, "$1")
+    .replace(/([@#$%*/\\<>\[\]{}()|_~`])\s+/g, "$1")
     .replace(/(["'])\s+(\w)/g, "$1$2")
     .replace(/(\w)\s+(["'])(?=\s|[.,;:!?]|$)/g, "$1$2")
-    .replace(/\s+\n/g, "\n")
-    .replace(/\n\s+/g, "\n")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n[ \t]+/g, "\n")
     .replace(/[ \t]+/g, " ")
-    .trim();
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/^[ \t]+/, "")
+    .replace(/[ \t]+$/, "");
 }
 
 export function applySpokenPunctuation(text: string): string {
@@ -40,7 +78,14 @@ export function applySpokenPunctuation(text: string): string {
 }
 
 export function normalizeTranscript(text: string): string {
-  return text.replace(/\s+/g, " ").trim();
+  return text
+    .replace(/\r\n/g, "\n")
+    .replace(/[ \t\f\v]+/g, " ")
+    .replace(/\n[ \t]+/g, "\n")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/^[ \t]+/, "")
+    .replace(/[ \t]+$/, "");
 }
 
 function capitalizeSentenceLead(text: string): string {
@@ -66,7 +111,8 @@ export function appendCommittedTranscript(current: string, incoming: string): st
   }
 
   const adjustedIncoming = applySentenceContinuationCase(current, normalizedIncoming);
-  const separator = /[\s\n]$/.test(current) ? "" : " ";
+  const startsWithNewline = adjustedIncoming.startsWith("\n");
+  const separator = startsWithNewline || /[\s\n]$/.test(current) ? "" : " ";
   return `${current}${separator}${adjustedIncoming}`;
 }
 

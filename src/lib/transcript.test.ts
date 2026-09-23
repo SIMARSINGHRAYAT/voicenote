@@ -8,8 +8,8 @@ import {
 } from "@/lib/transcript";
 
 describe("transcript utilities", () => {
-  it("normalizes whitespace safely", () => {
-    expect(normalizeTranscript("  hello   world \n  there  ")).toBe("hello world there");
+  it("preserves intentional line breaks while trimming stray spaces", () => {
+    expect(normalizeTranscript("  hello   world \n  there  ")).toBe("hello world\nthere");
   });
 
   it("appends committed segments without losing previous text", () => {
@@ -30,6 +30,11 @@ describe("transcript utilities", () => {
     expect(applySpokenPunctuation("hello comma world full stop")).toBe("hello, world.");
     expect(applySpokenPunctuation("this is single quote nice single quote")).toBe("this is 'nice'");
     expect(applySpokenPunctuation("say double cute hello double cute colon done")).toBe('say "hello": done');
+    expect(applySpokenPunctuation("next line then question mark")).toBe("\nthen?");
+    expect(applySpokenPunctuation("at sign example at sign domain dot com")).toBe("@example@domain.com");
+    expect(applySpokenPunctuation("open bracket hello close bracket plus sign")).toBe("[hello]+");
+    expect(applySpokenPunctuation("open curly brace hello close curly brace")).toBe("{hello}");
+    expect(applySpokenPunctuation("angle bracket a slash b angle bracket")).toBe("<a/b>");
   });
 
   it("formats duration in mm:ss", () => {

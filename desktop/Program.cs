@@ -52,10 +52,25 @@ internal sealed class VoiceNoteForm : Form
 
     private static void HandlePermissionRequested(object? sender, CoreWebView2PermissionRequestedEventArgs args)
     {
-        if (args.PermissionKind == CoreWebView2PermissionKind.Microphone &&
-            args.Uri.StartsWith("https://voicenote-mocha.vercel.app", StringComparison.OrdinalIgnoreCase))
+        if (args.PermissionKind != CoreWebView2PermissionKind.Microphone)
+        {
+            return;
+        }
+
+        var allowedOrigins = new[]
+        {
+            "https://voicenote-mocha.vercel.app",
+            "http://localhost",
+            "https://localhost",
+        };
+
+        var isAllowedOrigin = allowedOrigins.Any(origin =>
+            args.Uri.StartsWith(origin, StringComparison.OrdinalIgnoreCase));
+
+        if (isAllowedOrigin)
         {
             args.State = CoreWebView2PermissionState.Allow;
+            args.Handled = true;
         }
     }
 }
