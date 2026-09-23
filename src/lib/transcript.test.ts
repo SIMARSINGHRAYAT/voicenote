@@ -32,8 +32,10 @@ describe("transcript utilities", () => {
     expect(applySpokenPunctuation("say double cute hello double cute colon done")).toBe('say "hello": done');
     expect(applySpokenPunctuation("next line then question mark")).toBe("\nthen?");
     expect(applySpokenPunctuation("at sign example at sign domain dot com")).toBe("@example@domain.com");
-    expect(applySpokenPunctuation("open bracket hello close bracket plus sign")).toBe("[hello]+");
+    expect(applySpokenPunctuation("open square bracket hello close square bracket plus sign")).toBe("[hello]+");
+    expect(applySpokenPunctuation("open round bracket hello close round bracket")).toBe("(hello)");
     expect(applySpokenPunctuation("open curly brace hello close curly brace")).toBe("{hello}");
+    expect(applySpokenPunctuation("open angle bracket hello close this angle bracket")).toBe("<hello>");
     expect(applySpokenPunctuation("angle bracket a slash b angle bracket")).toBe("<a/b>");
   });
 

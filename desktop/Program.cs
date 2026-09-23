@@ -60,12 +60,18 @@ internal sealed class VoiceNoteForm : Form
         var allowedOrigins = new[]
         {
             "https://voicenote-mocha.vercel.app",
+            "https://*.vercel.app",
             "http://localhost",
             "https://localhost",
+            "http://127.0.0.1",
+            "https://127.0.0.1",
         };
 
+        var uri = args.Uri;
         var isAllowedOrigin = allowedOrigins.Any(origin =>
-            args.Uri.StartsWith(origin, StringComparison.OrdinalIgnoreCase));
+            origin.Contains("*", StringComparison.Ordinal)
+                ? uri.Contains(".vercel.app", StringComparison.OrdinalIgnoreCase)
+                : uri.StartsWith(origin, StringComparison.OrdinalIgnoreCase));
 
         if (isAllowedOrigin)
         {
